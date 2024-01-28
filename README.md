@@ -11,3 +11,7 @@ also leave reviews and ratings as well as complete challenges.
 # Technologies Used
 
 This is a desktop GUI app using Java GUI framework and a simple DB.
+
+# Software Development Cycle
+
+We are using the agile software development practice to best minimize risk and maximize profit.
