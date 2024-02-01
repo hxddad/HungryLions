@@ -10,7 +10,7 @@ also leave reviews and ratings as well as complete challenges.
 
 # Technologies Used
 
-This is a desktop GUI app using Java GUI framework and a simple DB.
+This is a desktop GUI app using JFrame a Java GUI framework and potentially a SQL database.
 
 # Software Development Cycle
 
