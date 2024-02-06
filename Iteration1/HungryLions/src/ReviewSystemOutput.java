@@ -25,6 +25,70 @@ class ReviewSystem {
         this.howManyFoodItemsEaten = howManyFoodItemsEaten;
     }
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getReviewWords() {
+		return reviewWords;
+	}
+
+	public void setReviewWords(String reviewWords) {
+		this.reviewWords = reviewWords;
+	}
+
+	public int getFoodQuality() {
+		return foodQuality;
+	}
+
+	public void setFoodQuality(int foodQuality) {
+		this.foodQuality = foodQuality;
+	}
+
+	public int getService() {
+		return service;
+	}
+
+	public void setService(int service) {
+		this.service = service;
+	}
+
+	public int getAtmosphere() {
+		return atmosphere;
+	}
+
+	public void setAtmosphere(int atmosphere) {
+		this.atmosphere = atmosphere;
+	}
+
+	public int getValueForMoney() {
+		return valueForMoney;
+	}
+
+	public void setValueForMoney(int valueForMoney) {
+		this.valueForMoney = valueForMoney;
+	}
+
+	public int getHowmanyTimesGone() {
+		return howmanyTimesGone;
+	}
+
+	public void setHowmanyTimesGone(int howmanyTimesGone) {
+		this.howmanyTimesGone = howmanyTimesGone;
+	}
+
+	public int getHowManyFoodItemsEaten() {
+		return howManyFoodItemsEaten;
+	}
+
+	public void setHowManyFoodItemsEaten(int howManyFoodItemsEaten) {
+		this.howManyFoodItemsEaten = howManyFoodItemsEaten;
+	}
+  
 }
 
 class ReviewSystemFunctions {
@@ -147,6 +211,24 @@ public void displayAllReviews() {
         displayReviewDetails(review);
     }
 }
+
+public List<String> getFlagged() {
+	return flagged;
+}
+
+public void setFlagged(List<String> flagged) {
+	this.flagged = flagged;
+}
+
+public static int getWordLimit() {
+	return WORD_LIMIT;
+}
+
+public void setReviews(List<ReviewSystem> reviews) {
+	this.reviews = reviews;
+}
+
+
 }
 class SubmissionException extends Exception {
     public SubmissionException(String m) {
