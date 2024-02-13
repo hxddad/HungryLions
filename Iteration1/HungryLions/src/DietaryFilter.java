@@ -6,96 +6,126 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class DietaryFilter {
 	
-	public static void main(String[] args) {
-		listHalal();
+	public static void main(String[] args) throws FileNotFoundException {
+		ListAll();
 		System.out.println("\n");
-		listKosher();
+		ListHalal();
 		System.out.println("\n");
-		listNoGluten();
+		ListKosher();
 		System.out.println("\n");
-		listVegan();
+		ListNoGluten();
 		System.out.println("\n");
-		listVegetarian();
+		ListVegan();
+		System.out.println("\n");
+		ListVegetarian();
+		
 	}
+	
+	public static String ListAll() throws FileNotFoundException{
+		File file = new File("restaurants.txt");
+		 StringBuilder result = new StringBuilder();
+		 try (Scanner scanner = new Scanner(file)) {
+	            while (scanner.hasNextLine()) {
+	                String line = scanner.nextLine();
+	                String[] col = line.split("   ");
+	                if (col.length >= 2) { 
+	                    result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
+	                }
+	            }
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
+	        }
+	}
+	
     
-	private static void listHalal() {
+	public static String ListHalal() throws FileNotFoundException {
 		File file = new File("restaurants.txt");
+		StringBuilder result = new StringBuilder();
 		 try (Scanner scanner = new Scanner(file)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
 	              
-	                if (line.contains("Halal (H)")) {
-	                	System.out.println(col[0] + " [" + col[1] + "]");
+	                if (line.contains("Halal (H)") && col.length >= 2) {
+	                	result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
 	                }
 	            }
-		 } catch (FileNotFoundException e) {
-	            System.err.println("File not found: " + e.getMessage());
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
 		}
 	}
 	
-	private static void listKosher() {
+	public static String ListKosher() throws FileNotFoundException {
 		File file = new File("restaurants.txt");
+		StringBuilder result = new StringBuilder();
 		 try (Scanner scanner = new Scanner(file)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
 	              
-	                if (line.contains("Kosher (K)")) {
-	                	System.out.println(col[0] + " [" + col[1] + "]");
+	                if (line.contains("Kosher (K)") && col.length >= 2) {
+	                	result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
 	                }
 	            }
-		 } catch (FileNotFoundException e) {
-	            System.err.println("File not found: " + e.getMessage());
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
 		}
 	}
 	
-	private static void listVegan() {
+	public static String ListVegan() throws FileNotFoundException {
 		File file = new File("restaurants.txt");
+		StringBuilder result = new StringBuilder();
 		 try (Scanner scanner = new Scanner(file)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
 	              
-	                if (line.contains("Vegan (V)")) {
-	                	System.out.println(col[0] + " [" + col[1] + "]");
+	                if (line.contains("Vegan (V)") && col.length >= 2) {
+	                	result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
 	                }
 	            }
-		 } catch (FileNotFoundException e) {
-	            System.err.println("File not found: " + e.getMessage());
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
+		}
+	}
+			
+	public static String ListVegetarian() throws FileNotFoundException {
+		File file = new File("restaurants.txt");
+		StringBuilder result = new StringBuilder();
+		 try (Scanner scanner = new Scanner(file)) {
+	            while (scanner.hasNextLine()) {
+	                String line = scanner.nextLine();
+	                String[] col = line.split("   ");
+	              
+	                if (line.contains("Vegetarian (VG)") && col.length >= 2) {
+	                	result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
+	                }
+	            }
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
 		}
 	}
 	
-	private static void listVegetarian() {
+	public static String ListNoGluten() throws FileNotFoundException {
 		File file = new File("restaurants.txt");
+		StringBuilder result = new StringBuilder();
 		 try (Scanner scanner = new Scanner(file)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
 	              
-	                if (line.contains("Vegetarian (VG)")) {
-	                	System.out.println(col[0] + " [" + col[1] + "]");
+	                if (line.contains("No Gluten (NG)") && col.length >= 2) {
+	                	result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
 	                }
 	            }
-		 } catch (FileNotFoundException e) {
-	            System.err.println("File not found: " + e.getMessage());
-		}
-	}
-	
-	private static void listNoGluten() {
-		File file = new File("restaurants.txt");
-		 try (Scanner scanner = new Scanner(file)) {
-	            while (scanner.hasNextLine()) {
-	                String line = scanner.nextLine();
-	                String[] col = line.split("   ");
-	              
-	                if (line.contains("No Gluten (NG)")) {
-	                	System.out.println(col[0] + " [" + col[1] + "]");
-	                }
-	            }
-		 } catch (FileNotFoundException e) {
-	            System.err.println("File not found: " + e.getMessage());
+	            return result.toString(); 
+	        } catch (FileNotFoundException e) {
+	            throw e;
 		}
 	}
 }
-
