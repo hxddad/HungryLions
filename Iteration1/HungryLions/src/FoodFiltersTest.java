@@ -13,31 +13,9 @@ import org.junit.runner.manipulation.Filter;
 
 class FoodFiltersTest {
 	
-	// helper method for catching exception case
-	
-    String ListAllException() throws FileNotFoundException { 
-        File file = new File("grades.txt"); // different file names
-        StringBuilder result = new StringBuilder();
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] col = line.split("   ");
-                if (col.length >= 2) { 
-                    result.append(col[0]).append(" [").append(col[1]).append("]").append("\n");
-                }
-            }
-        }
-        return result.toString(); 
-    }
-    
-	@Test
-	void TestFileNotFoundExcpetion() {
-		assertThrows(FileNotFoundException.class, (() -> ListAllException()));
-	}
-	
 	@Test
 	void TestNotThrowException() {
-		assertDoesNotThrow(() -> DietaryFilter.ListAll(), "Does not throw Exception.");
+		assertDoesNotThrow(() -> DietaryFilter.ListAll(), "It throw an exception when it wasn't supposed to.");
 	}
 	
 	@Test
