@@ -7,24 +7,24 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class DietaryFilter {
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		ListAll();
+		listAll("restaurants.txt");
 		System.out.println("\n");
-		ListHalal();
+		listHalal("restaurants.txt");
 		System.out.println("\n");
-		ListKosher();
+		listKosher("restaurants.txt");
 		System.out.println("\n");
-		ListNoGluten();
+		listNoGluten("restaurants.txt");
 		System.out.println("\n");
-		ListVegan();
+		listVegan("restaurants.txt");
 		System.out.println("\n");
-		ListVegetarian();
+		listVegetarian("restaurants.txt");
 		
 	}
 	
-	public static String ListAll() throws FileNotFoundException{
-		File file = new File("restaurants.txt");
+	public static String listAll(String file) throws FileNotFoundException{
+		File restaurants = new File(file);
 		 StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
@@ -39,10 +39,10 @@ public class DietaryFilter {
 	}
 	
     
-	public static String ListHalal() throws FileNotFoundException {
-		File file = new File("restaurants.txt");
+	public static String listHalal(String file) throws FileNotFoundException {
+		File restaurants = new File(file);
 		StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
@@ -57,10 +57,10 @@ public class DietaryFilter {
 		}
 	}
 	
-	public static String ListKosher() throws FileNotFoundException {
-		File file = new File("restaurants.txt");
+	public static String listKosher(String file) throws FileNotFoundException {
+		File restaurants = new File(file);
 		StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
@@ -75,10 +75,10 @@ public class DietaryFilter {
 		}
 	}
 	
-	public static String ListVegan() throws FileNotFoundException {
-		File file = new File("restaurants.txt");
+	public static String listVegan(String file) throws FileNotFoundException {
+		File restaurants = new File(file);
 		StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
@@ -93,10 +93,10 @@ public class DietaryFilter {
 		}
 	}
 			
-	public static String ListVegetarian() throws FileNotFoundException {
-		File file = new File("restaurants.txt");
+	public static String listVegetarian(String file) throws FileNotFoundException {
+		File restaurants = new File(file);
 		StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
@@ -111,10 +111,10 @@ public class DietaryFilter {
 		}
 	}
 	
-	public static String ListNoGluten() throws FileNotFoundException {
-		File file = new File("restaurants.txt");
+	public static String listNoGluten(String file) throws FileNotFoundException {
+		File restaurants = new File(file);
 		StringBuilder result = new StringBuilder();
-		 try (Scanner scanner = new Scanner(file)) {
+		 try (Scanner scanner = new Scanner(restaurants)) {
 	            while (scanner.hasNextLine()) {
 	                String line = scanner.nextLine();
 	                String[] col = line.split("   ");
