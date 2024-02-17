@@ -1,4 +1,3 @@
-package SearchFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,16 +6,24 @@ import java.util.Scanner;
 public class FoodSearchProgram {
     public static void main(String[] args) {
         // Sample food spots
-        List<FoodSpot> foodSpots = new ArrayList<>();
-        foodSpots.add(new FoodSpot("Marcello's", "Italian", false, false, false, true));
-        foodSpots.add(new FoodSpot("Thai Express", "Southeast Asian", true, true, false, true));
-        foodSpots.add(new FoodSpot("Burger Priest", "North American", false, false, false, false));
-        foodSpots.add(new FoodSpot("Mr. Greek", "Greek", true, true, true, true));
-        foodSpots.add(new FoodSpot("Sushi Haven", "Japanese", false, true, false, true));
-        foodSpots.add(new FoodSpot("Taco Fiesta", "Mexican", true, false, false, true));
-        foodSpots.add(new FoodSpot("Mediterranean Delight", "Mediterranean", true, true, true, false));
-        foodSpots.add(new FoodSpot("Woojoo Bunsik", "Korean", false, true, true, false));
-        foodSpots.add(new FoodSpot("Sofra", "Global Cuisines", false, true, false, false));
+    	final List<Restaurant> restaurants = new ArrayList<>();
+
+         {
+        	restaurants.add(new Restaurant(14, "Chop'd & Wrap'd", "Central Square (CSQ)", "Global Cuisines", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegan (V), Vegetarian (VG)", "high"));
+        	restaurants.add(new Restaurant(15, "Chop'd & Wrap'd", "Dahdaleh Building (DB)", "Global Cuisines", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegan (V), Vegetarian (VG)", "high"));
+        	restaurants.add(new Restaurant(16, "Chop'd & Wrap'd", "Winters College (WC)", "Global Cuisines", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegan (V), Vegetarian (VG)", "high"));
+        	restaurants.add(new Restaurant(17, "Chungchun Rice Hot Dog", "The Quad", "Korean", "Cash, Credit Card, Debit Card", "Halal (H), Vegan (V), Vegetarian (VG)", "low"));
+        	restaurants.add(new Restaurant(18, "Country Style (Kosher Deli)", "Winters College (WC)", "Mediterranean", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Kosher (K), Vegan (V), Vegetarian (VG)", "high"));
+        	restaurants.add(new Restaurant(19, "Create Stir Fry", "Stong College (SC)", "Italian, Southeast Asian", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegetarian (VG)", "medium"));
+        	restaurants.add(new Restaurant(20, "Create Stir Fry", "Central Square (CSQ)", "Italian, Southeast Asian", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegan (V), Vegetarian (VG)", "medium"));
+        	restaurants.add(new Restaurant(21, "Create Stir Fry", "Winters College (WC)", "Italian, Southeast Asian", "Cash, Credit Card, Debit Card, Meal Plan (MP), Meal Plan Plus (MP+)", "Halal (H), Vegetarian (VG)", "medium"));
+        	restaurants.add(new Restaurant(22, "Crepe Delicious", "The Quad", "French", "Cash, Credit Card, Debit Card, Meal Plan Plus (MP+)", "Halal (H), Vegan (V), Vegetarian (VG)", "medium"));
+        	restaurants.add(new Restaurant(23, "Cucina Italian Cafe", "York Lanes Mall", "Italian", "Cash, Credit Card, Debit Card, Meal Plan Plus (MP+)", "Vegan (V), Vegetarian (VG)", "high"));
+        	restaurants.add(new Restaurant(24, "Executive Dining Room", "Schulich Dining", "Global Cuisines", "Cash, Credit Card, Debit Card, Meal Plan Plus (MP+)", "Halal (H), No Gluten (NG), Vegan (V), Vegetarian (VG)", "expensive"));
+        	restaurants.add(new Restaurant(25, "Fat Bastard Burrito", "The Quad", "Mexican", "Cash, Credit Card, Debit Card", "No Gluten (NG), Vegan (V), Vegetarian (VG)", "low"));
+        	restaurants.add(new Restaurant(26, "Galito's Flamed Grilled Chicken", "The Quad", "South African", "Cash, Credit Card, Debit Card, Meal Plan Plus (MP+)", "Halal (H), Vegan (V)", "medium"));
+
+        }
 
         // Prompt user for filters
         Scanner scanner = new Scanner(System.in);
@@ -33,14 +40,14 @@ public class FoodSearchProgram {
         boolean isVegetarian = getYesNoInput("Do you want vegetarian?");
 
         // Search and display results
-        List<FoodSpot> filteredFoodSpots = searchFoodSpots(foodSpots, desiredCuisine, isHalal, isGlutenFree, isVegan, isVegetarian);
+        List<Restaurant> filteredFoodSpots = searchFoodSpots(restaurants, desiredCuisine, isHalal, isGlutenFree, isVegan, isVegetarian);
 
         System.out.println("\nSearch Results:");
         if (filteredFoodSpots.isEmpty()) {
             System.out.println("No matching food spots found.");
         } else {
-            for (FoodSpot foodSpot : filteredFoodSpots) {
-                System.out.println("Name: " + foodSpot.name + ", Cuisine: " + foodSpot.cuisineType);
+            for (Restaurant foodSpot : filteredFoodSpots) {
+                System.out.println("Name: " + foodSpot.getName() + ", Cuisine: " + foodSpot.getCuisine());
             }
         }
     }
@@ -68,19 +75,21 @@ public class FoodSearchProgram {
         return input.equals("yes");
     }
 
-    private static List<FoodSpot> searchFoodSpots(List<FoodSpot> foodSpots, String desiredCuisine, boolean isHalal, boolean isGlutenFree, boolean isVegan, boolean isVegetarian) {
-        List<FoodSpot> results = new ArrayList<>();
+    private static List<Restaurant> searchFoodSpots(List<Restaurant> restaurants, String desiredCuisine, boolean isHalal, boolean isGlutenFree, boolean isVegan, boolean isVegetarian) {
+        List<Restaurant> results = new ArrayList<>();
 
-        for (FoodSpot foodSpot : foodSpots) {
-            if (foodSpot.cuisineType.equalsIgnoreCase(desiredCuisine)
-                    && (!isHalal || foodSpot.isHalal)
-                    && (!isGlutenFree || foodSpot.isGlutenFree)
-                    && (!isVegan || foodSpot.isVegan)
-                    && (!isVegetarian || foodSpot.isVegetarian)) {
-                results.add(foodSpot);
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getCuisine().equalsIgnoreCase(desiredCuisine)
+                    && (!isHalal || restaurant.isHalal())
+                    && (!isGlutenFree || restaurant.isGlutenFree())
+                    && (!isVegan || restaurant.isVegan())
+                    && (!isVegetarian || restaurant.isVegetarian())) {
+                results.add(restaurant);
             }
         }
 
         return results;
+    
+
     }
 }

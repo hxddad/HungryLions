@@ -1,4 +1,3 @@
-package DietaryFilter;
 
 import static org.junit.jupiter.api.Assertions.*;
 

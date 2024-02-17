@@ -1,4 +1,3 @@
-package SearchFunction;
 
 
 // Define a class for a food spot

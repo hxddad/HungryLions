@@ -6,8 +6,12 @@ public class Restaurant {
     private String paymentMethod;
     private String dietaryOptions;
     private String priceRange;
+    
+    private boolean isHalal;
+    private boolean isGlutenFree;
+    private boolean isVegan;
+    private boolean isVegetarian;
 
-    // Constructor
     public Restaurant(int id, String name, String location, String cuisine, String paymentMethod, String dietaryOptions, String priceRange) {
         this.id = id;
         this.name = name;
@@ -16,9 +20,13 @@ public class Restaurant {
         this.paymentMethod = paymentMethod;
         this.dietaryOptions = dietaryOptions;
         this.priceRange = priceRange;
+        
+        this.isHalal = dietaryOptions.contains("Halal");
+        this.isGlutenFree = dietaryOptions.contains("No Gluten");
+        this.isVegan = dietaryOptions.contains("Vegan");
+        this.isVegetarian = dietaryOptions.contains("Vegetarian");
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -45,5 +53,21 @@ public class Restaurant {
 
     public String getPriceRange() {
         return priceRange;
+    }
+    
+    public boolean isHalal() {
+        return isHalal;
+    }
+
+    public boolean isGlutenFree() {
+        return isGlutenFree;
+    }
+
+    public boolean isVegan() {
+        return isVegan;
+    }
+
+    public boolean isVegetarian() {
+        return isVegetarian;
     }
 }
