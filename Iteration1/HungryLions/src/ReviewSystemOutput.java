@@ -95,7 +95,7 @@ class ReviewSystemFunctions {
 
     private List<ReviewSystem> reviews;
     private List<String> flagged;
-    private static final int WORD_LIMIT = 300;
+    private static final int WORD_LIMIT = 20;
 
     ReviewSystemFunctions() {
         this.reviews = new ArrayList<>();
