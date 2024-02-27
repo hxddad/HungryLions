@@ -1,0 +1,116 @@
+package ReviewSys;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ReviewSystemGUI extends JFrame {
+    
+	
+//made everything a text field for easy input , the numbers I will do later	
+	private JTextField username;
+    private JTextField restaurantName;
+    private JTextField reviewWords;
+    private JTextField foodQuality;
+    private JTextField service;
+    private JTextField atmosphere;
+    private JTextField valueForMoney;
+    private JTextField timesGone;
+    private JTextField itemsEaten;
+    private JButton submitButton;
+    private ReviewSystemFunctions reviewSystemFunctions;
+
+    
+    //this just initializing the review system class
+    public ReviewSystemGUI() {
+        this.reviewSystemFunctions = new ReviewSystemFunctions();
+        beginning();
+    }
+
+    private void beginning() {
+       
+    //I make the gride and the jLabels for the different things you need for the review	
+    	
+    	setLayout(new GridLayout(0, 2));
+
+        add(new JLabel("Username:"));
+        username = new JTextField(21);
+        add(username);
+
+        add(new JLabel("Restaurant Name:"));
+        restaurantName = new JTextField(21);
+        add(restaurantName);
+
+        add(new JLabel("Review Words:"));
+        reviewWords= new JTextField(21);
+        add(reviewWords);
+
+        add(new JLabel("Food Quality (1-5 only ):"));
+        foodQuality = new JTextField();
+        add(foodQuality);
+
+        add(new JLabel("Service (1-5 only ):"));
+        service = new JTextField();
+        add(service);
+
+        add(new JLabel("Atmosphere (1-5 only ):"));
+        atmosphere = new JTextField();
+        add(atmosphere);
+
+        add(new JLabel("Value for Money (1-5 only):"));
+        valueForMoney= new JTextField();
+        add(valueForMoney);
+
+        add(new JLabel("Times you have Gone to restaurant:"));
+        timesGone = new JTextField();
+        add(timesGone);
+
+        add(new JLabel("Items you have Eaten there :"));
+        itemsEaten = new JTextField();
+        add(itemsEaten);
+
+        //made a button to just click so they know it is submitted
+        submitButton = new JButton("Submit Review");
+        
+     //this action listener is for if the button is clicked or not we can then start the submitReview method
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+					submitReview();
+				} catch (SubmissionException e1) {
+				
+					e1.printStackTrace();
+				}
+            }
+        });
+        add(submitButton);
+
+        setSize(415, 315);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    private void submitReview() throws SubmissionException {
+        
+    //this right here we parse the string numbers the user put in to int       
+            int foodQuality = Integer.parseInt(this.foodQuality.getText());
+            int service = Integer.parseInt(this.service.getText());
+            int atmosphere = Integer.parseInt(this.atmosphere.getText());
+            int valueForMoney = Integer.parseInt(this.valueForMoney.getText());
+            int timesGone = Integer.parseInt(this.timesGone.getText());
+            int itemsEaten = Integer.parseInt(this.itemsEaten.getText());
+
+          //we add all the values into the review system class and use the submit review method to store the values
+            ReviewSystem review = new ReviewSystem(username.getText(), reviewWords.getText(), foodQuality, service, atmosphere, valueForMoney, timesGone, itemsEaten, restaurantName.getText());
+            this.reviewSystemFunctions.submitReview(review);
+//searched this up from stackOverflow , once submitted this will show the text saying it was submitted and stored
+            JOptionPane.showMessageDialog(this, "Review submitted successfully!");
+    }
+
+    //this just starts the jframe method in the main class to run it 
+    public static void main(String[] args) {
+                  new ReviewSystemGUI();
+         
+}
+}
