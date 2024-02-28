@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class mainLogin extends JFrame {
@@ -72,6 +73,38 @@ public class mainLogin extends JFrame {
 		btnNewButton = new JButton("LOGIN");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JLabel success = new JLabel("You have logged in!");
+				success.setBounds(78, 210, 283, 14);
+				success.setVisible(false);
+				JLabel fail = new JLabel("Password or Username is incorrect.");
+				fail.setBounds(78, 210, 283, 14);
+				success.setBounds(78, 210, 283, 14);
+				success.setVisible(false);
+				fail.setVisible(false);
+				contentPane.add(success);
+				contentPane.add(fail);
+				try {
+					userdb db = new userdb();
+					String username = textField.getText();
+					char[] passwordChars = passwordField.getPassword();
+					String password = new String(passwordChars);
+					boolean verify = db.verifyPassword(username, password);
+					if (verify == false) {
+						
+						fail.setVisible(true);
+						
+
+					}
+					else {
+						success.setVisible(true);
+
+					}
+					btnNewButton.setEnabled(false);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
 			}
 		});
 		btnNewButton.setBounds(118, 161, 89, 23);
