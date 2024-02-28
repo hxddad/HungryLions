@@ -18,13 +18,19 @@ public class ReviewSystemGUI extends JFrame {
     private JTextField timesGone;
     private JTextField itemsEaten;
     private JButton submitButton;
+    private String selectedRestaurant;
 
-    public ReviewSystemGUI() {
+    public ReviewSystemGUI(String selectedRestaurant) {
+        this.selectedRestaurant = selectedRestaurant; 
         initializeGUIComponents();
         populateRestaurants();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
-
+    
+    public ReviewSystemGUI() {
+        this(null); 
+    }
+    
     private void initializeGUIComponents() {
         setLayout(new GridLayout(0, 2));
 
@@ -86,6 +92,9 @@ public class ReviewSystemGUI extends JFrame {
                 int id = rs.getInt("ID");
                 restaurantComboBox.addItem(name);
                 restaurantMap.put(name, id);
+            }
+            if (selectedRestaurant != null && restaurantMap.containsKey(selectedRestaurant)) {
+                restaurantComboBox.setSelectedItem(selectedRestaurant); // Pre-select the given restaurant
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Failed to load restaurants: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

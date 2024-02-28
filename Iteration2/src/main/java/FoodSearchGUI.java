@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -18,18 +20,26 @@ public class FoodSearchGUI extends JFrame {
     private JTextArea portionValueArea; 
 
     private PortionValueService portionValueService; 
+    
+    private JButton giveReviewButton;
+    private String selectedRestaurant;
 
     public FoodSearchGUI() {
         super("Food Search");
         searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService(); 
         initialize();
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
 
     private void initialize() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new FlowLayout(FlowLayout.LEFT));
+        
+        giveReviewButton = new JButton("Give Reviews");
+        giveReviewButton.setEnabled(false); 
+        add(giveReviewButton);
 
         List<String> cuisines = searchProgram.fetchDistinctCuisines();
         cuisines.add(0, "All Cuisine");
@@ -74,14 +84,27 @@ public class FoodSearchGUI extends JFrame {
                     try {
                         int start = resultArea.getLineStartOffset(resultArea.getLineOfOffset(index));
                         int end = resultArea.getLineEndOffset(resultArea.getLineOfOffset(index));
-                        String selectedRestaurant = resultArea.getDocument().getText(start, end - start).trim();
+                        selectedRestaurant = resultArea.getDocument().getText(start, end - start).trim();
                         String priceRange = portionValueService.getPriceRangeByName(selectedRestaurant);
                         String portionValue = portionValueService.interpretPriceRangeAndPortion(priceRange);
                         portionValueArea.setText(selectedRestaurant + ": " + portionValue);
+                        
                     } catch (Exception ex) {
                         System.out.println("Error retrieving restaurant info: " + ex.getMessage());
                     }
+                    if (!selectedRestaurant.isEmpty()) {
+                        giveReviewButton.setEnabled(true);
+                    }
                 }
+                
+            }
+        });
+        
+        giveReviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ReviewSystemGUI reviewSystemGUI = new ReviewSystemGUI(selectedRestaurant); 
+                reviewSystemGUI.setVisible(true);
             }
         });
 
@@ -112,6 +135,7 @@ public class FoodSearchGUI extends JFrame {
             sb.append(restaurant.getName()).append("\n");
         }
         resultArea.setText(sb.toString());
+    
     }
 
     public static void main(String[] args) {
