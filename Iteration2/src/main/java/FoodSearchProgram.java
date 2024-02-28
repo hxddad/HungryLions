@@ -14,7 +14,7 @@ public class FoodSearchProgram {
         List<Restaurant> restaurants = new ArrayList<>();
         String sql = "SELECT * FROM Restaurants"; 
 
-        try (Connection conn = DatabaseConnection.connect();
+        try (Connection conn = DatabaseConnection.connect("app");
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
@@ -59,7 +59,7 @@ public class FoodSearchProgram {
         List<String> cuisines = new ArrayList<>();
         String sql = "SELECT DISTINCT Cuisine FROM Restaurants ORDER BY Cuisine"; 
 
-        try (Connection conn = DatabaseConnection.connect();
+        try (Connection conn = DatabaseConnection.connect("app");
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 

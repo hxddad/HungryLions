@@ -12,7 +12,7 @@ public class PortionValueService {
         List<Restaurant> restaurants = new ArrayList<>();
         String sql = "SELECT * FROM Restaurants";
 
-        try (Connection conn = DatabaseConnection.connect();
+        try (Connection conn = DatabaseConnection.connect("app");
              PreparedStatement pstmt  = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
