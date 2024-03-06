@@ -55,13 +55,9 @@ GUI for signing up of user.
 
 Used to webscrape resturants from York University's website.
 
-# JsonThings.java
+# userdb.java
 
-Temporary user login using stub database.
-
-# Main.java
-
-Temporary login (main page) using stub database.
+Connecting to SQLite database using JDBC, this class is used to create new users and to verify user login.
 
 
 
