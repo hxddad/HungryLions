@@ -17,6 +17,56 @@ Used to add a users favourite items.
 
 # FoodSearchProgram.java
 
+Java class to search for food in the GUI.
+
+# FoodSearchProgramMain.java
+
+Main driver class for searching for food.
+
+# PortionValueGUI.java
+
+Main GUI after user logs in.
+
+# PortionValueService.java
+
+Java class for the portion value for each restaurant.
+
+# Restaurant.java
+
+Java class for the resturant, dietary restrictions, etc.
+
+# ReviewSystemOutput.java
+
+Java class for reviewing the restaurant.
+
+# mainLogin.java
+
+Main login Java GUI.
+
+# restaurants.txt
+
+Information of all restaurants.
+
+# signup.java
+
+GUI for signing up of user.
+
+# scrape.py
+
+Used to webscrape resturants from York University's website.
+
+# JsonThings.java
+
+Temporary user login using stub database.
+
+# Main.java
+
+Temporary login (main page) using stub database.
+
+
+
+
+
 
 
 
