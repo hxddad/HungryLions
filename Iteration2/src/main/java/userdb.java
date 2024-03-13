@@ -30,10 +30,14 @@ public class userdb {
 		if (result.isBeforeFirst() ) {    
 		  return false;
 		} 
-		PreparedStatement ps1 = connection.prepareStatement("INSERT INTO USERS (username, password) VALUES (?, ?)");
-		ps1.setString(1, username);
-		ps1.setString(2, password);
-		return true;
+		//else {
+	        // Username doesn't exist, proceed with insertion
+	        PreparedStatement ps1 = connection.prepareStatement("INSERT INTO USERS (username, password) VALUES (?, ?)");
+	        ps1.setString(1, username);
+	        ps1.setString(2, password);
+	        int rowsAffected = ps1.executeUpdate(); // Execute the insertion statement
+	        return rowsAffected > 0; // Return true if insertion was successful
+	    //}
 	}
 	
 	// Returns true if authenticated, false otherwise.
@@ -43,7 +47,7 @@ public class userdb {
 	        ps = connection.prepareStatement("SELECT * FROM USERS WHERE username = ?");
 	        ps.setString(1, username);
 	        resultSet = ps.executeQuery();
-
+	        
 	        while (resultSet.next()) {
 	            if (Objects.equals(resultSet.getString("password"), password)) {
 	                return true;
@@ -53,10 +57,44 @@ public class userdb {
 	}
 	
 	
+	public boolean addFavourite(String restaurant) throws SQLException {
+		return false;
+	}
+	
+	
 	public static void main(String args[]) throws SQLException {
 		userdb test = new userdb();
-		System.out.println(test.verifyPassword("sad", "asdasd"));
+		System.out.println(test.addUser("nixger", "bond"));
+		String jdbcUrl = "jdbc:sqlite:/C:\\Users\\jason\\EECS2311-Project\\Iteration1\\HungryLions\\users.db";
+		try {
+			Connection connection = DriverManager.getConnection(jdbcUrl);
+			String sql = "SELECT * FROM users";
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+			while (result.next()) {
+				String name = result.getString("username");
+				String pw = result.getString("password");
+				System.out.println(name + pw);
+			}
+			
+			
+		}
+		catch (SQLException e) {
+			System.out.println("Error connecting to SQLite database");
+			e.printStackTrace();
+		}
+		//System.out.println(test.verifyPassword("jame333s", "bond"));
 		
+	}
+	
+	public void close() {
+	    try {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    } catch (SQLException e) {
+	        System.out.println("Error closing the database connection");
+	        e.printStackTrace();
+	    }
 	}
 
 	

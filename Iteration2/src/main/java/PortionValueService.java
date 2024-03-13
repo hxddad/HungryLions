@@ -7,14 +7,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PortionValueService {
+	
+	
+	private Connection conn = DatabaseConnection.connect("app");
 
     public List<Restaurant> getRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
         String sql = "SELECT * FROM Restaurants";
-
-        try (Connection conn = DatabaseConnection.connect("app");
+        
+        try {
              PreparedStatement pstmt  = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
                 Restaurant restaurant = new Restaurant(
