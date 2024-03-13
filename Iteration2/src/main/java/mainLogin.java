@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
@@ -108,7 +109,10 @@ public class mainLogin extends JFrame {
                     //btnNewButton.setEnabled(false);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
-                }
+                } catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         btnNewButton.setBounds(118, 161, 89, 23);

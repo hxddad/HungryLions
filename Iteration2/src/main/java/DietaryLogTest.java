@@ -1,4 +1,3 @@
-package DietaryLog;
 
 public class DietaryLogTest {
     public static void main(String[] args) {

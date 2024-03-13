@@ -1,4 +1,4 @@
-package DietaryLog;
+//package DietaryLog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class DietaryLogGUI extends JFrame {
 
         setTitle("Dietary Log App");
         setSize(400, 300);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         JPanel inputPanel = new JPanel();

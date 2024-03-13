@@ -1,4 +1,3 @@
-package DietaryLog;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -106,7 +107,10 @@ public class signup extends JFrame {
                     } catch (SQLException e1) {
                         System.out.println("SQL not connected! Error!");
                         e1.printStackTrace();
-                    }
+                    } catch (NoSuchAlgorithmException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                     
                 }
             }

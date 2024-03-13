@@ -39,6 +39,7 @@ public class FoodSearchGUI2 extends JFrame {
 	private JLabel welcomePrompt;
 	private JTextArea portionValueArea;
 	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
 	private JLabel label;
 	private JTextArea favoritesList;
 	private JLabel favoritesLabel;
@@ -69,7 +70,7 @@ public class FoodSearchGUI2 extends JFrame {
 		searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 385);
+		setBounds(100, 100, 496, 385);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -88,14 +89,43 @@ public class FoodSearchGUI2 extends JFrame {
 		JLabel lblNewLabel = new JLabel("Search Restaurant:");
 		lblNewLabel.setBounds(10, 62, 127, 14);
 		contentPane.add(lblNewLabel);
-		
-		resultArea = new JTextArea();
-		resultArea.setCaretPosition(0);
 
 		//resultArea.setBounds(10, 87, 414, 81);
-		scrollPane = new JScrollPane(resultArea);
-		scrollPane.setBounds(10, 87, 414, 81);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 87, 445, 81);
 		contentPane.add(scrollPane);
+		
+		resultArea = new JTextArea();
+		scrollPane.setViewportView(resultArea);
+		resultArea.setCaretPosition(0);
+		
+	      
+		resultArea.setEditable(false);
+		resultArea.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        super.mouseClicked(e);
+		        if (e.getClickCount() == 1) {
+		            int index = resultArea.viewToModel(e.getPoint());
+		            try {
+		                int start = resultArea.getLineStartOffset(resultArea.getLineOfOffset(index));
+		                int end = resultArea.getLineEndOffset(resultArea.getLineOfOffset(index));
+		                selectedRestaurant = resultArea.getDocument().getText(start, end - start).trim();
+		                String priceRange = portionValueService.getPriceRangeByName(selectedRestaurant);
+		                String portionValue = portionValueService.interpretPriceRangeAndPortion(priceRange);
+		              portionValueArea.setText(selectedRestaurant + ": " + portionValue);
+		                
+		            } catch (Exception ex) {
+		                System.out.println("Error retrieving restaurant info: " + ex.getMessage());
+		            }
+		            if (!selectedRestaurant.isEmpty()) {
+		                giveReviewButton.setEnabled(true);
+		                btnAddToFavorites.setEnabled(true);
+		            }
+		        }
+		        
+		    }
+		});
 		
 
 		
@@ -127,7 +157,7 @@ public class FoodSearchGUI2 extends JFrame {
 		
 		portionValueArea = new JTextArea(2, 35);
 		portionValueArea.setEditable(false);
-		portionValueArea.setBounds(10, 173, 414, 40);
+		portionValueArea.setBounds(10, 173, 445, 40);
 		contentPane.add(portionValueArea);
 		
 		
@@ -142,58 +172,42 @@ public class FoodSearchGUI2 extends JFrame {
 	        veganCheckBox.addActionListener(e -> searchAction());
 	        vegetarianCheckBox.addActionListener(e -> searchAction());
 	        searchTextField.getDocument().addDocumentListener((SimpleDocumentListener) e -> searchAction());
-	        
-	      
-	       resultArea.setEditable(false);
 	       
-	       cuisineComboBox.setBounds(315, 58, 109, 22);
+	       cuisineComboBox.setBounds(315, 58, 140, 22);
 	       contentPane.add(cuisineComboBox);
 	       
 	       label = new JLabel("Cuisine:");
 	       label.setBounds(260, 62, 59, 14);
 	       contentPane.add(label);
 	       
-	       favoritesList = new JTextArea();
 	       
-	       
-	       scrollPane = new JScrollPane(favoritesList);
-			scrollPane.setBounds(10, 287, 414, 48);
-			contentPane.add(scrollPane);
+	       scrollPane_1 = new JScrollPane();
+			scrollPane_1.setBounds(10, 287, 445, 48);
+			contentPane.add(scrollPane_1);
 			
-	       
-	       
-	       
-	       favoritesList.setEditable(false);
+			favoritesList = new JTextArea();
+			scrollPane_1.setViewportView(favoritesList);
+			
+			
+			
+			
+			favoritesList.setEditable(false);
+			favoritesList.append(favourites.getFavorites(username));
 	       
 	       favoritesLabel = new JLabel("My Favorites:");
 	       favoritesLabel.setBounds(10, 258, 373, 14);
 	       contentPane.add(favoritesLabel);
-	       favoritesList.append(favourites.getFavorites(username));
-	        resultArea.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                super.mouseClicked(e);
-	                if (e.getClickCount() == 1) {
-	                    int index = resultArea.viewToModel(e.getPoint());
-	                    try {
-	                        int start = resultArea.getLineStartOffset(resultArea.getLineOfOffset(index));
-	                        int end = resultArea.getLineEndOffset(resultArea.getLineOfOffset(index));
-	                        selectedRestaurant = resultArea.getDocument().getText(start, end - start).trim();
-	                        String priceRange = portionValueService.getPriceRangeByName(selectedRestaurant);
-	                        String portionValue = portionValueService.interpretPriceRangeAndPortion(priceRange);
-	                      portionValueArea.setText(selectedRestaurant + ": " + portionValue);
-	                        
-	                    } catch (Exception ex) {
-	                        System.out.println("Error retrieving restaurant info: " + ex.getMessage());
-	                    }
-	                    if (!selectedRestaurant.isEmpty()) {
-	                        giveReviewButton.setEnabled(true);
-	                        btnAddToFavorites.setEnabled(true);
-	                    }
-	                }
-	                
-	            }
-	        });
+	       
+	       JButton btnNewButton = new JButton("Log Food");
+	       btnNewButton.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+                DietaryLogGUI newFrame = new DietaryLogGUI();
+                newFrame.setVisible(true);
+                
+	       	}
+	       });
+	       btnNewButton.setBounds(356, 224, 99, 23);
+	       contentPane.add(btnNewButton);
 	        
 	        giveReviewButton.addActionListener(new ActionListener() {
 	            @Override
