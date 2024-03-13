@@ -3,9 +3,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static final String APP_DB_URL = "jdbc:sqlite:Appdb.db";
-    private static final String REVIEW_DB_URL = "jdbc:sqlite:Review.db";
-    private static final String USER_DB_URL = "jdbc:sqlite:users.db";
+    private static final String APP_DB_URL = "jdbc:sqlite:./db/Appdb.db";
+    private static final String REVIEW_DB_URL = "jdbc:sqlite:./db/Review.db";
+    private static final String USER_DB_URL = "jdbc:sqlite:./db/users.db";
 
     public static Connection connect(String dbName) {
         String url;
