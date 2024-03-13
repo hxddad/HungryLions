@@ -70,7 +70,7 @@ public class FoodSearchGUI2 extends JFrame {
 		searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 496, 385);
+		setBounds(100, 100, 496, 453);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -208,6 +208,20 @@ public class FoodSearchGUI2 extends JFrame {
 	       });
 	       btnNewButton.setBounds(356, 224, 99, 23);
 	       contentPane.add(btnNewButton);
+	       
+	       JLabel feedbackButton = new JLabel("Leave some feedback for us to improve!");
+	       feedbackButton.setBounds(10, 346, 336, 14);
+	       contentPane.add(feedbackButton);
+	       
+	       JButton reviewButton = new JButton("Leave Review");
+	       reviewButton.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       		FeedbackSystemGUI feedback = new FeedbackSystemGUI();
+	       		feedback.setVisible(true);
+	       	}
+	       });
+	       reviewButton.setBounds(10, 371, 194, 23);
+	       contentPane.add(reviewButton);
 	        
 	        giveReviewButton.addActionListener(new ActionListener() {
 	            @Override

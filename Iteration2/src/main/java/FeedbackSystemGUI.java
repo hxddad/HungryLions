@@ -1,4 +1,3 @@
-package ReviewSys;
 
 import javax.swing.*;
 import java.awt.*;
