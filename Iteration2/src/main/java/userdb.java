@@ -57,35 +57,9 @@ public class userdb {
 	}
 	
 	
-	public boolean addFavourite(String restaurant) throws SQLException {
-		return false;
-	}
 	
 	
-	public static void main(String args[]) throws SQLException {
-		userdb test = new userdb();
-		System.out.println(test.addUser("nixger", "bond"));
-		String jdbcUrl = "jdbc:sqlite:/C:\\Users\\jason\\EECS2311-Project\\Iteration1\\HungryLions\\users.db";
-		try {
-			Connection connection = DriverManager.getConnection(jdbcUrl);
-			String sql = "SELECT * FROM users";
-			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery(sql);
-			while (result.next()) {
-				String name = result.getString("username");
-				String pw = result.getString("password");
-				System.out.println(name + pw);
-			}
-			
-			
-		}
-		catch (SQLException e) {
-			System.out.println("Error connecting to SQLite database");
-			e.printStackTrace();
-		}
-		//System.out.println(test.verifyPassword("jame333s", "bond"));
-		
-	}
+	
 	
 	public void close() {
 	    try {

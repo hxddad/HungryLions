@@ -1,3 +1,5 @@
+
+
 import java.sql.*;
 
 public class favourites {
@@ -51,15 +53,26 @@ public class favourites {
 		ps.setString(1, username);
 		ps.setString(2, restaurant);
 		ResultSet result = ps.executeQuery();
-		if (result.isBeforeFirst() ) {    
+		if (!result.isBeforeFirst() ) {    
 			  return false;
 			} 
 		PreparedStatement ps1 = connection.prepareStatement("DELETE FROM FAVORITES WHERE username = ? AND favorite_restaurant = ?");
 		ps1.setString(1, username);
 		ps1.setString(2, restaurant);
+		ps1.executeUpdate();
 		return true;
 
 		
+	}
+	
+	public void close() {
+	    try {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    } catch (SQLException e) {
+	        System.out.println("Error closing the database connection");
+	        e.printStackTrace();
+	    }
 	}
 	
 	
