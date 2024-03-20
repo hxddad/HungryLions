@@ -17,3 +17,7 @@ also leave reviews and ratings as well as complete challenges.
 # Software Development Cycle
 
 We are using the agile software development practice to best minimize risk and maximize profit.
+
+# How To Run
+
+Clone from your local machine and run mainLogin.java! No other stuff required.
