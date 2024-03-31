@@ -52,18 +52,32 @@ public class ReveiwSystem2GUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Failed to load restaurants: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    private void displayReviews(String restaurantName) {
-        reviewDisplayArea.setText(""); // Clear existing text
-        try (Connection conn = DatabaseConnection.connect("app"); // Using "app" as it's the one working
-             PreparedStatement pstmt = conn.prepareStatement(
-                 "SELECT review_text FROM reviews " +
-                 "JOIN restaurants ON reviews.restaurant_id = restaurants.ID " +
-                 "WHERE RestaurantName = ?")) {
-            pstmt.setString(1, restaurantName);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                String reviewText = rs.getString("review_text");
-                reviewDisplayArea.append(reviewText + "\n");
+   private void displayReviews(String restaurantName) {
+        reviewDisplayArea.setText(""); 
+        try {
+            int restaurantId;
+            try (Connection connApp = DatabaseConnection.connect("app");
+                 PreparedStatement pstmtApp = connApp.prepareStatement(
+                         "SELECT ID FROM restaurants WHERE RestaurantName = ?")) {
+                pstmtApp.setString(1, restaurantName);
+                ResultSet rsApp = pstmtApp.executeQuery();
+                if (rsApp.next()) {
+                    restaurantId = rsApp.getInt("ID");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Restaurant not found in the database", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+            }
+
+            try (Connection connReview = DatabaseConnection.connect("review");
+                 PreparedStatement pstmtReview = connReview.prepareStatement(
+                         "SELECT review_text FROM reviews WHERE restaurant_id = ?")) {
+                pstmtReview.setInt(1, restaurantId);
+                ResultSet rsReview = pstmtReview.executeQuery();
+                while (rsReview.next()) {
+                    String reviewText = rsReview.getString("review_text");
+                    reviewDisplayArea.append(reviewText + "\n");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
