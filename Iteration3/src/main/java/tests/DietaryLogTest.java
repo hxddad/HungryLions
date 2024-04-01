@@ -1,4 +1,5 @@
 package tests;
+import DietaryLogMain;
 
 public class DietaryLogTest {
     public static void main(String[] args) {

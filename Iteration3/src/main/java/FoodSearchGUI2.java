@@ -47,6 +47,7 @@ public class FoodSearchGUI2 extends JFrame {
 	private JButton btnAddToFavorites;
 	private favourites favourites = new favourites();
 	private JTextArea reviewArea = new JTextArea(2, 35);
+	private JButton Challenges;
 	/**
 	 * Launch the application.
 	 */
@@ -84,7 +85,7 @@ public class FoodSearchGUI2 extends JFrame {
 		contentPane.add(welcomePrompt);
 		
         JButton changePasswordButton = new JButton("Change Password");
-        changePasswordButton.setBounds(420, 7, 150, 23); 
+        changePasswordButton.setBounds(183, 345, 164, 23); 
         contentPane.add(changePasswordButton);
         
         changePasswordButton.addActionListener(new ActionListener() {
@@ -94,7 +95,7 @@ public class FoodSearchGUI2 extends JFrame {
                     public void run() {
                         try {
                             ChangePasswordGUI changePasswordGUI = new ChangePasswordGUI(username);
-                            dispose();
+                            //dispose();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -234,8 +235,15 @@ public class FoodSearchGUI2 extends JFrame {
 	       JButton btnNewButton = new JButton("Log Food");
 	       btnNewButton.addActionListener(new ActionListener() {
 	       	public void actionPerformed(ActionEvent e) {
-                DietaryLogGUI newFrame = new DietaryLogGUI();
-                newFrame.setVisible(true);
+                DietaryLogGUI newFrame;
+				try {
+					newFrame = new DietaryLogGUI(username);
+	                newFrame.setVisible(true);
+
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 
 	       	}
 	       });
@@ -260,12 +268,28 @@ public class FoodSearchGUI2 extends JFrame {
 	       reviewArea.setEditable(false);
 	       reviewArea.setBounds(10, 230, 445, 70);
 	       contentPane.add(reviewArea);
+	       
+	       Challenges = new JButton("Challenges");
+	       Challenges.addActionListener(new ActionListener() {
+	       	public void actionPerformed(ActionEvent e) {
+	       	}
+	       });
+	       Challenges.setBounds(357, 345, 98, 23);
+	       contentPane.add(Challenges);
 	        
 	        giveReviewButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	                ReviewSystemGUI reviewSystemGUI = new ReviewSystemGUI(selectedRestaurant); 
 	                reviewSystemGUI.setVisible(true);
+	                
+	            }
+	        });
+	        Challenges.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	ChallengesGUI GUI = new ChallengesGUI();
+	            	GUI.createAndShowGUI();
 	                
 	            }
 	        });

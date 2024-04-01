@@ -15,7 +15,7 @@ public class ChangePasswordGUI extends JFrame{
         this.username = username; 
         
         frame = new JFrame("Change Password");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(350, 250); 
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
         

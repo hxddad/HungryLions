@@ -14,8 +14,8 @@ public class ChallengesManager {
                    + "a free a meal.", 0, 50));
            challenges.add(new Challenge("750 Hungry Cubs", "Spend a total of "
                    + "$750 worth of food for 75% off of a meal.", 0, 750));
-           challenges.add(new Challenge("Why's this line so long?", "Purchase 25 times at any"
-                   + "Tim Hortans on campus for $3 off an order.", 0, 25));
+           challenges.add(new Challenge("Why's this line so long?", "Purchase 25 times at any "
+                   + "Tim Horton's on campus for $3 off an order.", 0, 25));
            challenges.add(new Challenge("Taste of Asia", "Purchace food worth at "
                    + "least $10 at Chinese, Korean, Japanese, "
                    + "Thai or Indian dining locations 30 times for a 50% off of a meal.", 0, 30));

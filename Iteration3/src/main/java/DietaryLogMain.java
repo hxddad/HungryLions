@@ -1,15 +1,26 @@
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class DietaryLogMain {
     private List<String> foodItems;
-
+    private Connection connection;
+	private Statement statement;
     public DietaryLogMain() {
         foodItems = new ArrayList<>();
+        try {
+			connection = DatabaseConnection.connect("log");
+			statement = connection.createStatement();
+		}
+		catch (SQLException e) {
+			System.out.println("Error connecting to SQLite database");
+			e.printStackTrace();
+		}
     }
-
     public boolean logFoodItem(String foodItem) {
         if (foodItem == null || foodItem.isEmpty()) {
             System.out.println("Error: Please enter a valid food item. Spaces are not allowed as an entry.");

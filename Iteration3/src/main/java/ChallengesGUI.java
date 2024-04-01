@@ -12,7 +12,7 @@ public class ChallengesGUI {
         createAndShowGUI();
     }
 
-    private void createAndShowGUI() {
+    public void createAndShowGUI() {
         challengesManager.addMonthlyChallenges();
         JFrame frame = new JFrame("One-time Challenges");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +44,5 @@ public class ChallengesGUI {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(ChallengesGUI::new);
-    }
+    
 }

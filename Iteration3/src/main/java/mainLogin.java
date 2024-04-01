@@ -47,7 +47,7 @@ public class mainLogin extends JFrame {
      */
     public mainLogin() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 331);
+        setBounds(100, 100, 450, 299);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -86,7 +86,7 @@ public class mainLogin extends JFrame {
                 try {
                     if (fail == null) {
                         fail = new JLabel("Password or Username is incorrect.");
-                        fail.setBounds(110, 235, 283, 14);
+                        fail.setBounds(110, 205, 283, 14);
                         fail.setVisible(false);
                         contentPane.add(fail);
                     } else {
@@ -128,15 +128,5 @@ public class mainLogin extends JFrame {
         });
         signup.setBounds(217, 161, 89, 23);
         contentPane.add(signup);
-        
-        JButton resetPassword = new JButton("RESET PASSWORD");
-        resetPassword.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		changepw = new ChangePasswordGUI();
-        		
-        	}
-        });
-        resetPassword.setBounds(131, 195, 156, 23);
-        contentPane.add(resetPassword);
     }
 }
