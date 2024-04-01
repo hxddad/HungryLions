@@ -4,37 +4,66 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 
-public class ChangePasswordGUI {
+public class ChangePasswordGUI extends JFrame{
     private JFrame frame;
-    private JTextField usernameField;
     private JPasswordField newPasswordField;
     private JPasswordField confirmNewPasswordField;
     private JButton changePasswordButton;
+    private String username; 
 
-    public ChangePasswordGUI() {
+    public ChangePasswordGUI(String username) {
+        this.username = username; 
+        
         frame = new JFrame("Change Password");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
-        frame.setLayout(new GridLayout(5, 2));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(350, 250); 
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
+        
+        frame.add(Box.createRigidArea(new Dimension(0, 10)));
+        
+        // Header
+        JLabel headerLabel = new JLabel("Change Password", SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Serif", Font.BOLD, 20)); 
+        headerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        frame.add(headerLabel);
 
-        frame.add(new JLabel("Username:"));
-        usernameField = new JTextField();
-        frame.add(usernameField);
+        // Add some space
+        frame.add(Box.createRigidArea(new Dimension(0, 10))); 
 
-        frame.add(new JLabel("New Password:"));
-        newPasswordField = new JPasswordField();
-        frame.add(newPasswordField);
+        // Display Username
+        JLabel usernameLabel = new JLabel("Username: " + username, SwingConstants.CENTER);
+        usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        frame.add(usernameLabel);
 
-        frame.add(new JLabel("Confirm New Password:"));
-        confirmNewPasswordField = new JPasswordField();
-        frame.add(confirmNewPasswordField);
+        // Add some space
+        frame.add(Box.createRigidArea(new Dimension(0, 20))); 
 
+     // Panel to contain the password fields and labels
+        JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        frame.add(passwordPanel);
+
+        // Inner panel for aligning the password fields
+        JPanel fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new GridLayout(2, 2, 10, 10)); 
+        passwordPanel.add(fieldsPanel);
+
+        // New Password
+        passwordPanel.add(new JLabel("New Password:"));
+        newPasswordField = new JPasswordField(10);
+        passwordPanel.add(newPasswordField);
+
+        // Confirm New Password
+        passwordPanel.add(new JLabel("Confirm New Password:"));
+        confirmNewPasswordField = new JPasswordField(10);
+        passwordPanel.add(confirmNewPasswordField);
+
+        // Change Password Button
         changePasswordButton = new JButton("Change Password");
+        changePasswordButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(changePasswordButton);
         
         changePasswordButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
                 String newPassword = new String(newPasswordField.getPassword());
                 String confirmNewPassword = new String(confirmNewPasswordField.getPassword());
 
@@ -59,14 +88,19 @@ public class ChangePasswordGUI {
             }
         });
 
+        frame.add(Box.createRigidArea(new Dimension(0, 10)));
+
         frame.setLocationRelativeTo(null); // Center the window
         frame.setVisible(true);
     }
 
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new ChangePasswordGUI();
+                ChangePasswordGUI cpGui = new ChangePasswordGUI("james");
+                cpGui.setVisible(true);
             }
         });
     }
