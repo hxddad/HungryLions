@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ChangePasswordGUI {
+public class ChangePasswordGUI extends JFrame{
     private JFrame frame;
     private JPasswordField newPasswordField;
     private JPasswordField confirmNewPasswordField;
@@ -14,7 +14,7 @@ public class ChangePasswordGUI {
         this.username = username; 
         
         frame = new JFrame("Change Password");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 250); 
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); 
         
@@ -73,7 +73,15 @@ public class ChangePasswordGUI {
 
                 boolean success = PasswordChanger.changePassword(username, newPassword);
                 if (success) {
+                	try {
+                        FoodSearchGUI2 newFrame = new FoodSearchGUI2(username);
+                        newFrame.setVisible(success);
+                    } catch (Exception er) {
+                        er.printStackTrace();
+                    }
                     JOptionPane.showMessageDialog(frame, "Password changed successfully.");
+                    ChangePasswordGUI.this.dispose();
+                    
                 } else {
                     JOptionPane.showMessageDialog(frame, "Failed to change the password.");
                 }
@@ -89,10 +97,10 @@ public class ChangePasswordGUI {
 
 
     public static void main(String[] args) {
-        String systemUsername = "james"; 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new ChangePasswordGUI(systemUsername);
+                ChangePasswordGUI cpGui = new ChangePasswordGUI("james");
+                cpGui.setVisible(true);
             }
         });
     }

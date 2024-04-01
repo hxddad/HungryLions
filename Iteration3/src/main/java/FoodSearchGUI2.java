@@ -71,7 +71,7 @@ public class FoodSearchGUI2 extends JFrame {
 		searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 496, 500);
+		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -82,6 +82,26 @@ public class FoodSearchGUI2 extends JFrame {
 		welcomePrompt.setBounds(10, 11, 237, 14);
 		contentPane.add(welcomePrompt);
 		
+        JButton changePasswordButton = new JButton("Change Password");
+        changePasswordButton.setBounds(420, 7, 150, 23); 
+        contentPane.add(changePasswordButton);
+        
+        changePasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            ChangePasswordGUI changePasswordGUI = new ChangePasswordGUI(username);
+                            dispose();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+		
 		searchTextField = new JTextField();
 		searchTextField.setBounds(125, 59, 122, 20);
 		contentPane.add(searchTextField);
@@ -91,7 +111,6 @@ public class FoodSearchGUI2 extends JFrame {
 		lblNewLabel.setBounds(10, 62, 127, 14);
 		contentPane.add(lblNewLabel);
 
-		//resultArea.setBounds(10, 87, 414, 81);
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 87, 445, 81);
 		contentPane.add(scrollPane);
