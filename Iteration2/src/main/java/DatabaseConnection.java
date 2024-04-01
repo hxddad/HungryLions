@@ -6,6 +6,8 @@ public class DatabaseConnection {
     private static final String APP_DB_URL = "jdbc:sqlite:./db/Appdb.db";
     private static final String REVIEW_DB_URL = "jdbc:sqlite:./db/Review.db";
     private static final String USER_DB_URL = "jdbc:sqlite:./db/users.db";
+    private static final String LOG_DB_URL = "jdbc:sqlite:./db/logdb.db";
+
 
     public static Connection connect(String dbName) {
         String url;
@@ -18,6 +20,9 @@ public class DatabaseConnection {
                 break;
             case "users":
                 url = USER_DB_URL; 
+                break;
+            case "log":
+                url = LOG_DB_URL; 
                 break;
             default:
                 throw new IllegalArgumentException("Invalid database name: " + dbName);

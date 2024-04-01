@@ -208,7 +208,13 @@ public class FoodSearchGUI2 extends JFrame {
 	       JButton btnNewButton = new JButton("Log Food");
 	       btnNewButton.addActionListener(new ActionListener() {
 	       	public void actionPerformed(ActionEvent e) {
-                DietaryLogGUI newFrame = new DietaryLogGUI();
+                DietaryLogGUI newFrame = null;
+				try {
+					newFrame = new DietaryLogGUI(username);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 newFrame.setVisible(true);
                 
 	       	}
