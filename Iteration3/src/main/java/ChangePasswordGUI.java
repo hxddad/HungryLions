@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 
 public class ChangePasswordGUI {
     private JFrame frame;
@@ -42,12 +43,19 @@ public class ChangePasswordGUI {
                     return;
                 }
 
-                boolean success = PasswordChanger.changePassword(username, newPassword);
-                if (success) {
-                    JOptionPane.showMessageDialog(frame, "Password changed successfully.");
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Failed to change the password.");
-                }
+                boolean success;
+				try {
+					success = PasswordChanger.changePassword(username, newPassword);
+					 if (success) {
+		                    JOptionPane.showMessageDialog(frame, "Password changed successfully.");
+		                } else {
+		                    JOptionPane.showMessageDialog(frame, "Failed to change the password.");
+		                }
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+               
             }
         });
 

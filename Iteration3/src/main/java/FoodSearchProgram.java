@@ -53,6 +53,51 @@ public class FoodSearchProgram {
         }
         return results;
     }
+    
+    
+    public String fetchPaymentMethod(String rest) throws SQLException {
+    	try (Connection conn = DatabaseConnection.connect("app")) {
+    		ResultSet resultSet = null;
+    		PreparedStatement ps1 = conn.prepareStatement("SELECT AcceptedPaymentMethod from Restaurants WHERE RestaurantName =  ?");
+    		ps1.setString(1, rest);
+    		resultSet = ps1.executeQuery();
+    		String payment = "";
+    		while (resultSet.next()) {
+    			payment += resultSet.getString(1);
+    		}
+    		return payment;
+    	}
+    	
+    }
+    
+    public String fetchLocation(String rest) throws SQLException {
+    	try (Connection conn = DatabaseConnection.connect("app")) {
+    		ResultSet resultSet = null;
+    		PreparedStatement ps1 = conn.prepareStatement("SELECT Location FROM Restaurants WHERE RestaurantName = ?");
+    		ps1.setString(1, rest);
+    		resultSet = ps1.executeQuery();
+    		String fetch = "";
+    		while (resultSet.next()) {
+    			fetch = resultSet.getString(1);
+    		}
+    		return fetch;
+    	}
+    }
+    
+    
+    public String fetchDietRestriction(String rest) throws SQLException {
+    	try (Connection conn = DatabaseConnection.connect("app")) {
+    		ResultSet resultSet = null;
+    		PreparedStatement ps1 = conn.prepareStatement("SELECT DietRestriction FROM Restaurants WHERE RestaurantName = ?");
+    		ps1.setString(1, rest);
+    		resultSet = ps1.executeQuery();
+    		String fetch = "";
+    		while (resultSet.next()) {
+    			fetch = resultSet.getString(1);
+    		}
+    		return fetch;
+    	}
+    }
 
     
     public List<String> fetchDistinctCuisines() {

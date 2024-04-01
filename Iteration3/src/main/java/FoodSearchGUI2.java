@@ -46,6 +46,7 @@ public class FoodSearchGUI2 extends JFrame {
 	private JLabel favoritesLabel;
 	private JButton btnAddToFavorites;
 	private favourites favourites = new favourites();
+	private JTextArea reviewArea = new JTextArea(2, 35);
 	/**
 	 * Launch the application.
 	 */
@@ -71,7 +72,7 @@ public class FoodSearchGUI2 extends JFrame {
 		searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 496, 500);
+		setBounds(100, 100, 488, 667);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -115,6 +116,14 @@ public class FoodSearchGUI2 extends JFrame {
 		                String priceRange = portionValueService.getPriceRangeByName(selectedRestaurant);
 		                String portionValue = portionValueService.interpretPriceRangeAndPortion(priceRange);
 		              portionValueArea.setText(selectedRestaurant + ": " + portionValue);
+		              portionValueArea.setLineWrap(true);
+		              String text = "Payment Method: " + searchProgram.fetchPaymentMethod(selectedRestaurant) + "\nDietary Restrictions: " + searchProgram.fetchDietRestriction(selectedRestaurant) 
+		              + "\nLocation: " + searchProgram.fetchLocation(selectedRestaurant);
+		              reviewArea.setText(text);
+		              
+
+		              
+
 		                
 		            } catch (Exception ex) {
 		                System.out.println("Error retrieving restaurant info: " + ex.getMessage());
@@ -133,17 +142,16 @@ public class FoodSearchGUI2 extends JFrame {
 		
 		giveReviewButton = new JButton("Give Reviews");
 		giveReviewButton.setEnabled(false);
-		giveReviewButton.setBounds(10, 224, 163, 23);
+		giveReviewButton.setBounds(10, 311, 163, 23);
 		contentPane.add(giveReviewButton);
-		
 		viewReviewButton = new JButton("View Reviews");
 		viewReviewButton.setEnabled(false);
-		viewReviewButton.setBounds(10, 252, 163, 23);
+		viewReviewButton.setBounds(10, 345, 163, 23);
 		contentPane.add(viewReviewButton);
 		
 		btnAddToFavorites = new JButton("Add To Favorites");
 		btnAddToFavorites.setEnabled(false);
-		btnAddToFavorites.setBounds(182, 224, 164, 23);
+		btnAddToFavorites.setBounds(183, 311, 164, 23);
 		contentPane.add(btnAddToFavorites);
 		
 		halalCheckBox = new JCheckBox("Halal");
@@ -164,7 +172,7 @@ public class FoodSearchGUI2 extends JFrame {
 		
 		portionValueArea = new JTextArea(2, 35);
 		portionValueArea.setEditable(false);
-		portionValueArea.setBounds(10, 173, 445, 40);
+		portionValueArea.setBounds(10, 179, 445, 40);
 		contentPane.add(portionValueArea);
 		
 		
@@ -189,7 +197,7 @@ public class FoodSearchGUI2 extends JFrame {
 	       
 	       
 	       scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(10, 312, 445, 80);
+			scrollPane_1.setBounds(10, 404, 445, 80);
 			contentPane.add(scrollPane_1);
 			
 			favoritesList = new JTextArea();
@@ -197,12 +205,11 @@ public class FoodSearchGUI2 extends JFrame {
 			
 			
 			
-			
 			favoritesList.setEditable(false);
 			favoritesList.append(favourites.getFavorites(username));
 	       
 	       favoritesLabel = new JLabel("My Favorites:");
-	       favoritesLabel.setBounds(10, 283, 373, 14);
+	       favoritesLabel.setBounds(10, 379, 373, 14);
 	       contentPane.add(favoritesLabel);
 	       
 	       JButton btnNewButton = new JButton("Log Food");
@@ -213,11 +220,11 @@ public class FoodSearchGUI2 extends JFrame {
                 
 	       	}
 	       });
-	       btnNewButton.setBounds(356, 224, 99, 23);
+	       btnNewButton.setBounds(356, 311, 99, 23);
 	       contentPane.add(btnNewButton);
 	       
 	       JLabel feedbackButton = new JLabel("Leave some feedback for us to improve!");
-	       feedbackButton.setBounds(10, 403, 336, 14);
+	       feedbackButton.setBounds(11, 495, 336, 14);
 	       contentPane.add(feedbackButton);
 	       
 	       JButton reviewButton = new JButton("Leave Review");
@@ -227,8 +234,13 @@ public class FoodSearchGUI2 extends JFrame {
 	       		feedback.setVisible(true);
 	       	}
 	       });
-	       reviewButton.setBounds(10, 428, 194, 23);
+	       reviewButton.setBounds(10, 520, 194, 23);
 	       contentPane.add(reviewButton);
+	       
+	       
+	       reviewArea.setEditable(false);
+	       reviewArea.setBounds(10, 230, 445, 70);
+	       contentPane.add(reviewArea);
 	        
 	        giveReviewButton.addActionListener(new ActionListener() {
 	            @Override

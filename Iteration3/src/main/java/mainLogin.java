@@ -21,9 +21,10 @@ public class mainLogin extends JFrame {
     private JPasswordField passwordField;
     private JLabel lblNewLabel;
     private JButton btnNewButton;
-    private JButton btnNewButton_1;
+    private JButton signup;
     private JLabel fail;
     private userdb db = new userdb();
+    private ChangePasswordGUI changepw;
 
     /**
      * Launch the application.
@@ -46,7 +47,7 @@ public class mainLogin extends JFrame {
      */
     public mainLogin() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 331);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -85,7 +86,7 @@ public class mainLogin extends JFrame {
                 try {
                     if (fail == null) {
                         fail = new JLabel("Password or Username is incorrect.");
-                        fail.setBounds(110, 205, 283, 14);
+                        fail.setBounds(110, 235, 283, 14);
                         fail.setVisible(false);
                         contentPane.add(fail);
                     } else {
@@ -118,14 +119,24 @@ public class mainLogin extends JFrame {
         btnNewButton.setBounds(118, 161, 89, 23);
         contentPane.add(btnNewButton);
 
-        btnNewButton_1 = new JButton("SIGN UP");
-        btnNewButton_1.addActionListener(new ActionListener() {
+        signup = new JButton("SIGN UP");
+        signup.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 signup newFrame = new signup();
                 newFrame.setVisible(true);
             }
         });
-        btnNewButton_1.setBounds(217, 161, 89, 23);
-        contentPane.add(btnNewButton_1);
+        signup.setBounds(217, 161, 89, 23);
+        contentPane.add(signup);
+        
+        JButton resetPassword = new JButton("RESET PASSWORD");
+        resetPassword.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		changepw = new ChangePasswordGUI();
+        		
+        	}
+        });
+        resetPassword.setBounds(131, 195, 156, 23);
+        contentPane.add(resetPassword);
     }
 }

@@ -1,12 +1,15 @@
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PasswordChanger {
+	
+	
 
     // Method to change the password
-    public static boolean changePassword(String username, String newPassword) {
+    public static boolean changePassword(String username, String newPassword) throws NoSuchAlgorithmException {
         if (newPassword.length() < 5) {
             System.out.println("New password must be at least 5 characters long.");
             return false;
@@ -27,7 +30,7 @@ public class PasswordChanger {
             // Update the password
             String updateSql = "UPDATE users SET password = ? WHERE username = ?";
             try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                updateStmt.setString(1, newPassword);
+                updateStmt.setString(1, userdb.toHexString(userdb.getSHA(newPassword)));
                 updateStmt.setString(2, username);
                 int rowsAffected = updateStmt.executeUpdate();
                 if (rowsAffected > 0) {

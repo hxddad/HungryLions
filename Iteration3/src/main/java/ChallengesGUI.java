@@ -1,4 +1,3 @@
-package rewards;
 
 import javax.swing.*;
 import java.awt.*;
