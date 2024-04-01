@@ -35,6 +35,7 @@ public class FoodSearchGUI2 extends JFrame {
     private PortionValueService portionValueService; 
     
     private JButton giveReviewButton;
+    private JButton viewReviewButton;
     private String selectedRestaurant;
 	private JLabel welcomePrompt;
 	private JTextArea portionValueArea;
@@ -70,7 +71,7 @@ public class FoodSearchGUI2 extends JFrame {
 		searchProgram = new FoodSearchProgram();
         portionValueService = new PortionValueService();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 496, 453);
+		setBounds(100, 100, 496, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -120,6 +121,7 @@ public class FoodSearchGUI2 extends JFrame {
 		            }
 		            if (!selectedRestaurant.isEmpty()) {
 		                giveReviewButton.setEnabled(true);
+		                viewReviewButton.setEnabled(true);
 		                btnAddToFavorites.setEnabled(true);
 		            }
 		        }
@@ -133,6 +135,11 @@ public class FoodSearchGUI2 extends JFrame {
 		giveReviewButton.setEnabled(false);
 		giveReviewButton.setBounds(10, 224, 163, 23);
 		contentPane.add(giveReviewButton);
+		
+		viewReviewButton = new JButton("View Reviews");
+		viewReviewButton.setEnabled(false);
+		viewReviewButton.setBounds(10, 252, 163, 23);
+		contentPane.add(viewReviewButton);
 		
 		btnAddToFavorites = new JButton("Add To Favorites");
 		btnAddToFavorites.setEnabled(false);
@@ -182,7 +189,7 @@ public class FoodSearchGUI2 extends JFrame {
 	       
 	       
 	       scrollPane_1 = new JScrollPane();
-			scrollPane_1.setBounds(10, 287, 445, 48);
+			scrollPane_1.setBounds(10, 312, 445, 80);
 			contentPane.add(scrollPane_1);
 			
 			favoritesList = new JTextArea();
@@ -195,7 +202,7 @@ public class FoodSearchGUI2 extends JFrame {
 			favoritesList.append(favourites.getFavorites(username));
 	       
 	       favoritesLabel = new JLabel("My Favorites:");
-	       favoritesLabel.setBounds(10, 258, 373, 14);
+	       favoritesLabel.setBounds(10, 283, 373, 14);
 	       contentPane.add(favoritesLabel);
 	       
 	       JButton btnNewButton = new JButton("Log Food");
@@ -210,7 +217,7 @@ public class FoodSearchGUI2 extends JFrame {
 	       contentPane.add(btnNewButton);
 	       
 	       JLabel feedbackButton = new JLabel("Leave some feedback for us to improve!");
-	       feedbackButton.setBounds(10, 346, 336, 14);
+	       feedbackButton.setBounds(10, 403, 336, 14);
 	       contentPane.add(feedbackButton);
 	       
 	       JButton reviewButton = new JButton("Leave Review");
@@ -220,7 +227,7 @@ public class FoodSearchGUI2 extends JFrame {
 	       		feedback.setVisible(true);
 	       	}
 	       });
-	       reviewButton.setBounds(10, 371, 194, 23);
+	       reviewButton.setBounds(10, 428, 194, 23);
 	       contentPane.add(reviewButton);
 	        
 	        giveReviewButton.addActionListener(new ActionListener() {
@@ -228,6 +235,20 @@ public class FoodSearchGUI2 extends JFrame {
 	            public void actionPerformed(ActionEvent e) {
 	                ReviewSystemGUI reviewSystemGUI = new ReviewSystemGUI(selectedRestaurant); 
 	                reviewSystemGUI.setVisible(true);
+	                
+	            }
+	        });
+	        viewReviewButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	ViewReviews viewReviews = null;
+					try {
+						viewReviews = new ViewReviews(selectedRestaurant);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
+	            	viewReviews.setVisible(true);
 	                
 	            }
 	        });
