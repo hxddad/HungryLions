@@ -39,4 +39,3 @@ public class DatabaseConnection {
     }
 }
 
-C
