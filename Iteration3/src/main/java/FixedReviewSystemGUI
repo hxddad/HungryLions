@@ -1,0 +1,151 @@
+package ReviewSys;
+import javax.swing.*;
+import DatabaseConnection;
+import ReviewSystem;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ReviewSystemGUI extends JFrame {
+    
+    private JComboBox<String> restaurantComboBox;
+    private Map<String, Integer> restaurantMap = new HashMap<>(); 
+    private JTextArea reviewWords;
+    private JComboBox<Integer> foodQuality, service, atmosphere, valueForMoney;
+    private String selectedRestaurant;
+    private JTextField timesGone;
+    private JTextField itemsEaten;
+    
+    public ReviewSystemGUI(String selectedRestaurant) {
+        this.selectedRestaurant = selectedRestaurant; 
+        initializeGUIComponents();
+        //populateRestaurants();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+    
+    public ReviewSystemGUI() {
+        this(null); 
+    }
+    
+    private void initializeGUIComponents() {
+        setLayout(new GridLayout(0, 2));
+
+        Integer[] ratings = {1, 2, 3, 4, 5};
+        foodQuality = new JComboBox<>(ratings);
+        service = new JComboBox<>(ratings);
+        atmosphere = new JComboBox<>(ratings);
+        valueForMoney = new JComboBox<>(ratings);
+
+        add(new JLabel("Restaurant Name:"));
+        restaurantComboBox = new JComboBox<>(); 
+        add(restaurantComboBox);
+
+        reviewWords = new JTextArea(5, 20);
+        JScrollPane scrollPane = new JScrollPane(reviewWords);
+        reviewWords.setLineWrap(true);
+        reviewWords.setWrapStyleWord(true);
+        add(new JLabel("Review Words:"));
+        add(scrollPane);
+
+        add(new JLabel("Food Quality (1-5):"));
+        foodQuality = new JComboBox<>(ratings);
+        add(foodQuality);
+
+        add(new JLabel("Service (1-5):"));
+        service = new JComboBox<>(ratings);
+        add(service);
+
+        add(new JLabel("Atmosphere (1-5):"));
+        atmosphere = new JComboBox<>(ratings);
+        add(atmosphere);
+
+        add(new JLabel("Value for Money (1-5):"));
+        valueForMoney = new JComboBox<>(ratings);
+        add(valueForMoney);
+
+        add(new JLabel("Times Gone:"));
+       timesGone = new JTextField(20);
+        add(timesGone);
+
+        add(new JLabel("Items Eaten:"));
+        itemsEaten = new JTextField(20);
+        add(itemsEaten);
+
+        JButton submitButton = new JButton("Submit Review");
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                submitReview();
+            }
+        });
+        add(submitButton);
+
+        setSize(500, 700); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    private void populateRestaurants() {
+        String sql = "SELECT ID, RestaurantName FROM restaurants"; 
+        try (Connection conn = DatabaseConnection.connect("app");
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String name = rs.getString("RestaurantName");
+                int id = rs.getInt("ID");
+                restaurantComboBox.addItem(name);
+                restaurantMap.put(name, id);
+            }
+            if (selectedRestaurant != null && restaurantMap.containsKey(selectedRestaurant)) {
+                restaurantComboBox.setSelectedItem(selectedRestaurant); // Pre-select the given restaurant
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Failed to load restaurants: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void submitReview() {
+        try {
+            String selectedRestaurantName = (String) restaurantComboBox.getSelectedItem();
+            Integer restaurantId = restaurantMap.get(selectedRestaurantName);
+            int userId = 1; // Hardcoded user ID
+
+            // Get the selected rating from JComboBoxes
+            int foodQualityRating = (int) foodQuality.getSelectedItem();
+            int serviceRating = (int) service.getSelectedItem();
+            int atmosphereRating = (int) atmosphere.getSelectedItem();
+            int valueForMoneyRating = (int) valueForMoney.getSelectedItem();
+
+            // Parse timesGone and itemsEaten, allowing for non-numeric or empty inputs
+            Integer timesGoneToInt = parseOptionalIntegerField(timesGone);
+            Integer itemsEatenCount = parseOptionalIntegerField(itemsEaten);
+
+            String reviewText = reviewWords.getText();
+
+            ReviewSystem review = new ReviewSystem(restaurantId, userId, reviewText, foodQualityRating, serviceRating, atmosphereRating, valueForMoneyRating, timesGoneToInt, itemsEatenCount);
+            // ... assuming ReviewSystemOutput.insertReview() can handle null values ...
+            JOptionPane.showMessageDialog(this, "Review submitted successfully!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Failed to submit review: " + e.getMessage(), "Submission Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private Integer parseOptionalIntegerField(JTextField field) {
+        try {
+            return Integer.parseInt(field.getText().trim());
+        } catch (NumberFormatException e) {
+            if (field.getText().trim().isEmpty() || field.getText().trim().equalsIgnoreCase("I don't know")) {
+                return null; // Accept empty input or specific string as 'unknown'
+            }
+            throw e; // Re-throw the exception if the input is not valid
+        }
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(ReviewSystemGUI::new);
+    }
+}
+
