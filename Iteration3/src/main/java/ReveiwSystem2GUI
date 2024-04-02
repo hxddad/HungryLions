@@ -1,0 +1,91 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+
+public class ReveiwSystem2GUI extends JFrame {
+
+    private JComboBox<String> restaurantComboBox;
+    private JTextArea reviewDisplayArea;
+
+    public ReveiwSystem2GUI() {
+        initializeGUIComponents();
+        populateRestaurants();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void initializeGUIComponents() {
+        setTitle("Review Viewer");
+        setLayout(new BorderLayout());
+
+        restaurantComboBox = new JComboBox<>();
+        restaurantComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedRestaurant = (String) restaurantComboBox.getSelectedItem();
+                displayReviews(selectedRestaurant);
+            }
+        });
+        add(restaurantComboBox, BorderLayout.NORTH);
+
+        reviewDisplayArea = new JTextArea(20, 50);
+        reviewDisplayArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(reviewDisplayArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        setSize(600, 400);
+        setLocationRelativeTo(null); // Center the window
+        setVisible(true);
+    }
+
+    private void populateRestaurants() {
+        try (Connection conn = DatabaseConnection.connect("app"); // Use "app" if the restaurants table is in Appdb.db
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT RestaurantName FROM restaurants")) {
+            while (rs.next()) {
+                String name = rs.getString("RestaurantName");
+                restaurantComboBox.addItem(name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load restaurants: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+   private void displayReviews(String restaurantName) {
+        reviewDisplayArea.setText(""); 
+        try {
+            int restaurantId;
+            try (Connection connApp = DatabaseConnection.connect("app");
+                 PreparedStatement pstmtApp = connApp.prepareStatement(
+                         "SELECT ID FROM restaurants WHERE RestaurantName = ?")) {
+                pstmtApp.setString(1, restaurantName);
+                ResultSet rsApp = pstmtApp.executeQuery();
+                if (rsApp.next()) {
+                    restaurantId = rsApp.getInt("ID");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Restaurant not found in the database", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                }
+            }
+
+            try (Connection connReview = DatabaseConnection.connect("review");
+                 PreparedStatement pstmtReview = connReview.prepareStatement(
+                         "SELECT review_text FROM reviews WHERE restaurant_id = ?")) {
+                pstmtReview.setInt(1, restaurantId);
+                ResultSet rsReview = pstmtReview.executeQuery();
+                while (rsReview.next()) {
+                    String reviewText = rsReview.getString("review_text");
+                    reviewDisplayArea.append(reviewText + "\n");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to load reviews: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(ReveiwSystem2GUI::new);
+    }
+}

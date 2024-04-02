@@ -1,0 +1,66 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import javax.swing.*;
+import java.sql.*;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+public class ReviewSystem2GUITest {
+// we need the review system and the mocko which after careful search online has found to be very useful
+    private ReviewSystem2GUI reviewSystem2GUI;
+    private Connection mockConnection;
+    private PreparedStatement mockPreparedStatement;
+    private Statement mockStatement;
+    private ResultSet mockResultSet;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        // We use th mock to set up a simple data base connection
+        mockConnection = mock(Connection.class);
+        mockStatement = mock(Statement.class);
+        mockPreparedStatement = mock(PreparedStatement.class);
+        mockResultSet = mock(ResultSet.class);
+//this creates the statement and what to return 
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+
+        DatabaseConnection.setConnection(mockConnection); // Assuming you have a method to set a mock connection for testing
+// we have also instantiated the reviewsystem 2
+        reviewSystem2GUI = new ReviewSystem2GUI();
+    }
+
+    @Test
+    void testPopulateRestaurants() throws SQLException {
+
+
+        // this will test the population of the restaurents
+        when(mockResultSet.next()).thenReturn(true, true, false);
+        when(mockResultSet.getString("RestaurantName")).thenReturn("Restaurant 1", "Restaurant 2");
+
+        reviewSystem2GUI.populateRestaurants();
+
+        JComboBox<String> comboBox = reviewSystem2GUI.getRestaurantComboBox(); // Assuming you provide a getter for the ComboBox
+        assertEquals(2, comboBox.getItemCount());
+        assertEquals("Restaurant 1", comboBox.getItemAt(0));
+        assertEquals("Restaurant 2", comboBox.getItemAt(1));
+    }
+
+    @Test
+    void testDisplayReviews() throws SQLException {
+        // Assuming the two reviews have been made this will test whether they were stored and can be accessed 
+        when(mockResultSet.next()).thenReturn(true, true, false);
+        when(mockResultSet.getString("review_text")).thenReturn("Review 1", "Review 2");
+
+        reviewSystem2GUI.displayReviews("Restaurant 1");
+
+        JTextArea textArea = reviewSystem2GUI.getReviewDisplayArea(); // Assuming you provide a getter for the TextArea
+        String textContent = textArea.getText().trim();
+        assertTrue(textContent.contains("Review 1"));
+        assertTrue(textContent.contains("Review 2"));
+    }
+}
