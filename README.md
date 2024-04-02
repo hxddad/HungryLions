@@ -18,6 +18,18 @@ also leave reviews and ratings as well as complete challenges.
 
 We are using the agile software development practice to best minimize risk and maximize profit.
 
+# Iteration 1
+
+Basic implementation of our software using a stub database.
+
+# Iteration 2
+
+Reduce code smells and fixes and outstanding bugs (issues) as outlined on this github repo.
+
+# Iteration 3
+
+Continues to fix any outstanding bugs and add a total of 18 user stories (3 per person, 6 people in total).
+
 # How To Run
 
 Clone from your local machine and run mainLogin.java! No other stuff required.
