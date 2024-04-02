@@ -124,7 +124,7 @@ The following NEW user stories were added in this iteration:
 - Viewing Submitted Reviews
 - Challenges
 - Food Discounts
-- 
+  
 
 
 
