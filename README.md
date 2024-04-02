@@ -8,6 +8,10 @@ HungryLions is an application that lets users find food places across campus by 
 perfect place to eat. These filters include prices, cuisine cultures, dietary restrictions, location, etc. Users can
 also leave reviews and ratings as well as complete challenges.
 
+# Features
+
+Our software is awesome!!!!!!!!!!
+
 # Technologies Used
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
