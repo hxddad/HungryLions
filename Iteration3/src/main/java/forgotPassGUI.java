@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class forgotPassGUI extends JFrame implements ActionListener {
-    private JTextField newPasswordField, confirmPasswordField;
+    private JTextField usernameField, newPasswordField, confirmPasswordField; // Added usernameField
 
     public forgotPassGUI() {
         setTitle("Forgot Password");
@@ -35,7 +35,12 @@ public class forgotPassGUI extends JFrame implements ActionListener {
             popup.setLocationRelativeTo(null);
 
             // Components for the popup window
-            JPanel inputPanel = new JPanel(new GridLayout(3, 2));
+            // Changed layout to accommodate username field
+            JPanel inputPanel = new JPanel(new GridLayout(4, 2));
+            inputPanel.add(new JLabel("Username:")); // Label for username
+            usernameField = new JTextField(); // TextField for username
+            inputPanel.add(usernameField);
+            
             inputPanel.add(new JLabel("New Password:"));
             newPasswordField = new JTextField();
             inputPanel.add(newPasswordField);
@@ -61,6 +66,7 @@ public class forgotPassGUI extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            String username = usernameField.getText(); // Retrieve the username
             String newPassword = newPasswordField.getText();
             String confirmPassword = confirmPasswordField.getText();
             
@@ -69,15 +75,14 @@ public class forgotPassGUI extends JFrame implements ActionListener {
                 return;
             }
             
-            // Here you can implement your logic to save the new password
-            JOptionPane.showMessageDialog(null, "Password saved successfully.");
+            // Now you have the username to use along with the password change logic
+            JOptionPane.showMessageDialog(null, "Password saved successfully for user: " + username);
+            usernameField.setText("");
             newPasswordField.setText("");
             confirmPasswordField.setText("");
             popup.dispose(); // Close the popup window
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new forgotPassGUI().setVisible(true));
-    }
+    
 }

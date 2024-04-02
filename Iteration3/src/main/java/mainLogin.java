@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -86,7 +87,7 @@ public class mainLogin extends JFrame {
                 try {
                     if (fail == null) {
                         fail = new JLabel("Password or Username is incorrect.");
-                        fail.setBounds(110, 205, 283, 14);
+                        fail.setBounds(110, 225, 283, 14);
                         fail.setVisible(false);
                         contentPane.add(fail);
                     } else {
@@ -128,5 +129,15 @@ public class mainLogin extends JFrame {
         });
         signup.setBounds(217, 161, 89, 23);
         contentPane.add(signup);
+        
+        JButton btnNewButton_1 = new JButton("FORGOT PASSWORD");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		forgotPassGUI pass = new forgotPassGUI();
+        		SwingUtilities.invokeLater(() -> pass.setVisible(true));
+        	}
+        });
+        btnNewButton_1.setBounds(138, 195, 159, 23);
+        contentPane.add(btnNewButton_1);
     }
 }

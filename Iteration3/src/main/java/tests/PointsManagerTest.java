@@ -1,3 +1,4 @@
+package tests;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -10,6 +11,11 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import IdExistsException;
+import NoPointsException;
+import PointsManager;
+import User;
 
 class PointsManagerTest {
 	
